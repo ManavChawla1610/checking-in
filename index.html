@@ -20,7 +20,6 @@
       background: #5c94fc;
     }
 
-    /* Start Overlay */
     #start-screen {
       position: absolute;
       inset: 0;
@@ -41,7 +40,6 @@
       cursor: pointer;
     }
 
-    /* World & Sky */
     #world {
       position: relative;
       width: 100vw;
@@ -50,7 +48,6 @@
       overflow: hidden;
     }
 
-    /* Pixel Clouds */
     .pixel-cloud {
       position: absolute;
       width: 64px;
@@ -59,24 +56,22 @@
       opacity: 0.85;
       box-shadow: 16px -8px 0 #fff, 32px 0 0 #fff;
     }
-    .c1 { top: 12%; left: 15%; }
-    .c2 { top: 22%; right: 20%; transform: scale(0.8); }
+    .c1 { top: 14%; left: 12%; }
+    .c2 { top: 24%; right: 15%; transform: scale(0.85); }
 
-    /* Mario-Style Ground */
     .ground {
       position: absolute;
       bottom: 0;
       width: 100%;
-      height: 80px;
+      height: 90px;
       background: #c84c0c;
       border-top: 8px solid #00a800;
       z-index: 10;
     }
 
-    /* Retro Speech Bubble */
     #dialogue-bubble {
       position: absolute;
-      bottom: 230px;
+      bottom: 240px;
       left: 50%;
       transform: translateX(-50%);
       background: #fff;
@@ -85,7 +80,7 @@
       box-shadow: 4px 4px 0 rgba(0,0,0,0.35);
       z-index: 50;
       max-width: 90vw;
-      min-width: 250px;
+      min-width: 270px;
       text-align: center;
       display: none;
     }
@@ -93,7 +88,7 @@
       content: '';
       position: absolute;
       bottom: -16px;
-      left: 38%;
+      left: 45%;
       border-width: 8px;
       border-style: solid;
       border-color: #000 transparent transparent transparent;
@@ -102,7 +97,7 @@
       content: '';
       position: absolute;
       bottom: -10px;
-      left: 38%;
+      left: 45%;
       border-width: 6px;
       border-style: solid;
       border-color: #fff transparent transparent transparent;
@@ -121,36 +116,34 @@
       height: 18px;
       vertical-align: middle;
       display: inline-block;
-      margin: 0 3px;
+      margin: 0;
     }
 
-    /* Stage for characters */
     #stage {
       position: absolute;
-      bottom: 80px;
+      bottom: 90px;
       left: 50%;
       transform: translateX(-50%);
-      width: 320px;
-      height: 140px;
+      width: 240px;
+      height: 130px;
       z-index: 20;
     }
 
-    /* Guy character walking */
     .guy-holder {
       position: absolute;
-      left: -120px;
+      left: -130px;
       bottom: 0;
       width: 80px;
       height: 90px;
-      transition: left 2.8s cubic-bezier(0.25, 1, 0.45, 1);
+      transition: left 2.6s cubic-bezier(0.25, 1, 0.45, 1);
     }
     .guy-holder.walked {
-      left: 65px; /* Arrives closely beside her */
+      left: 44px;
     }
 
     .girl-holder {
       position: absolute;
-      right: 50px;
+      right: 44px;
       bottom: 0;
       width: 80px;
       height: 90px;
@@ -162,24 +155,23 @@
       display: block;
     }
 
-    /* Floating band-aid that gets applied */
     #bandaid-prop {
       position: absolute;
-      left: 125px;
-      bottom: 38px;
-      width: 22px;
-      height: 14px;
+      left: 110px;
+      bottom: 37px;
+      width: 20px;
+      height: 12px;
       z-index: 40;
       display: none;
       filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.3));
     }
     @keyframes applyBandAid {
       0% {
-        transform: translate(-18px, -18px) rotate(-25deg) scale(1.4);
+        transform: translate(-14px, -18px) rotate(-20deg) scale(1.3);
         opacity: 0.2;
       }
       60% {
-        transform: translate(-2px, -4px) rotate(8deg) scale(1.1);
+        transform: translate(-1px, -2px) rotate(4deg) scale(1.05);
         opacity: 1;
       }
       100% {
@@ -188,25 +180,12 @@
       }
     }
     .applying {
-      animation: applyBandAid 0.9s ease-out forwards;
-    }
-
-    /* Little pixel sparkles on application */
-    .sparkle {
-      position: absolute;
-      left: 138px;
-      bottom: 45px;
-      width: 18px;
-      height: 18px;
-      z-index: 45;
-      display: none;
-      pointer-events: none;
+      animation: applyBandAid 0.8s ease-out forwards;
     }
   </style>
 </head>
 <body>
 
-  <!-- Press Start Overlay -->
   <div id="start-screen">
     <button class="retro-btn" id="start-btn">▶ PRESS START</button>
   </div>
@@ -215,93 +194,90 @@
     <div class="pixel-cloud c1"></div>
     <div class="pixel-cloud c2"></div>
 
-    <!-- Speech Dialogue Box -->
     <div id="dialogue-bubble">
       <p class="bubble-text" id="bubble-text">...</p>
     </div>
 
-    <!-- Main Character Stage -->
     <div id="stage">
       
-      <!-- Guy (Brown hair, green outfit, green shoes) -->
+      <!-- Guy -->
       <div class="guy-holder" id="guy-holder">
         <svg class="character" viewBox="0 0 24 25" shape-rendering="crispEdges">
-          <!-- Hair/Hat -->
           <path fill="#6d4c41" d="M5 2h10v4H5zM4 4h12v2H4z"/>
-          <!-- Face -->
           <path fill="#ffcc80" d="M5 6h10v6H5z"/>
-          <!-- Soft Caring Eyes -->
           <path fill="#3e2723" d="M6 8h2v2H6zM12 8h2v2h-2z"/>
-          <!-- Gentle Smile -->
           <path fill="#d84315" d="M7 11h1v1H7zM8 12h4v1H8zM12 11h1v1h-1z"/>
-          <!-- Shirt -->
           <path fill="#43a047" d="M4 12h12v7H4z"/>
           <path fill="#2e7d32" d="M4 12h2v7H4zM14 12h2v7h-2z"/>
           <path fill="#fff" d="M2 13h2v5H2z"/>
           <path fill="#fbc02d" d="M9 16h2v2H9z"/>
           <path fill="#212121" d="M4 16h12v1H4z"/>
 
-          <!-- Default lowered right arm -->
+          <!-- Idle Arm -->
           <g id="guy-arm-idle">
             <path fill="#fff" d="M16 13h2v4h-2z"/>
             <path fill="#ffcc80" d="M16 17h2v2h-2z"/>
           </g>
-          <!-- Extended reaching arm taking her hand -->
-          <g id="guy-arm-reach" style="display: none;">
+          <!-- Clasped Hands -->
+          <g id="guy-arm-holding" style="display: none;">
             <path fill="#fff" d="M15 13h4v3h-4z"/>
-            <path fill="#ffcc80" d="M19 14h5v3h-5z"/>
+            <path fill="#ffcc80" d="M18 14h6v4h-6z"/>
+            <path fill="#e0a96d" d="M21 14h2v4h-2z"/>
           </g>
 
-          <!-- Green Shoes -->
           <path fill="#2e7d32" d="M5 23h4v2H5zM11 23h4v2h-4z"/>
         </svg>
       </div>
 
-      <!-- Girl (Blonde hair, blue dress, turned away looking right, hurt hand) -->
+      <!-- Girl -->
       <div class="girl-holder" id="girl-holder">
         <svg class="character" viewBox="0 0 22 25" shape-rendering="crispEdges">
-          <!-- Blonde Hair -->
           <path fill="#ffee58" d="M3 2h16v12H3z"/>
           <path fill="#fbc02d" d="M2 4h18v10H2z"/>
-          <!-- Face -->
           <path fill="#ffcc80" d="M5 6h12v6H5z"/>
 
-          <!-- Eyes looking away (Default Stage 1) -->
+          <!-- Stage 1: Looking Away -->
           <g id="girl-eyes-away">
             <path fill="#3e2723" d="M9 8h2v2H9zM14 8h2v2h-2z"/>
             <path fill="#d84315" d="M8 11h5v1H8z"/>
           </g>
 
-          <!-- Eyes looking down (Stage 2 after he asks) -->
+          <!-- Stage 2: Head Down Sadly -->
           <g id="girl-eyes-down" style="display: none;">
             <path fill="#3e2723" d="M9 9h3v1H9zM14 9h3v1h-3zM8 10h1v1H8zM13 10h1v1h-1z"/>
             <path fill="#b91c1c" d="M9 12h4v1H9z"/>
           </g>
 
-          <!-- Blue Dress -->
+          <!-- Stage 3: Turned Toward Him With Blush -->
+          <g id="girl-face-turned" style="display: none;">
+            <path fill="#3e2723" d="M6 8h2v2H6zM11 8h2v2h-2z"/>
+            <path fill="#d84315" d="M7 11h4v1H7zM8 12h2v1H8z"/>
+            <path fill="#ff8a80" d="M5 10h2v1H5zM13 10h2v1h-2z"/>
+          </g>
+
           <path fill="#1e88e5" d="M3 12h16v9H3z"/>
           <path fill="#1565c0" d="M2 13h4v4H2zM16 13h4v4h-4z"/>
           <path fill="#bbdefb" d="M7 12h8v2H7zM3 20h16v1H3z"/>
           <path fill="#ffcc80" d="M9 15h4v3H9z"/>
 
-          <!-- Left Hurt Hand held out towards guy -->
-          <path fill="#ffcc80" d="M0 14h3v3H0z"/>
-          <!-- Red Scratch / Scrape on hand -->
-          <path id="hand-scrape" fill="#dc2626" d="M1 15h2v1H1z"/>
-          <!-- Visible Band-Aid stuck on her hand after application -->
+          <!-- Injured Hand -->
+          <g id="girl-hand-default">
+            <path fill="#ffcc80" d="M0 14h3v3H0z"/>
+            <path id="hand-scrape" fill="#dc2626" d="M1 15h2v1H1z"/>
+          </g>
+          <!-- Bandaged Hand -->
           <g id="girl-bandaid" style="display: none;">
             <path fill="#d4a373" d="M0 14h4v3H0z"/>
             <path fill="#e76f51" d="M1 14h2v3H1z"/>
             <path fill="#b91c1c" d="M1 15h2v1H1z"/>
           </g>
 
-          <!-- Legs & Shoes -->
           <path fill="#ffcc80" d="M6 21h3v2H6zM13 21h3v2h-3z"/>
           <path fill="#4e342e" d="M5 23h5v2H5zM12 23h5v2h-5z"/>
         </svg>
       </div>
 
-      <!-- Animated Pixel Band-aid Prop -->
+      <!-- Animated Band-Aid Prop -->
       <svg id="bandaid-prop" viewBox="0 0 16 10" shape-rendering="crispEdges">
         <path fill="#d4a373" d="M2 1h12v8H2zM1 2h14v6H1z"/>
         <path fill="#e76f51" d="M6 1h4v8H6z"/>
@@ -309,15 +285,8 @@
         <path fill="#fff" d="M7 4h2v2H7z"/>
       </svg>
 
-      <!-- Sparkle SVG on Band-aid Application -->
-      <svg class="sparkle" id="sparkle" viewBox="0 0 16 16" shape-rendering="crispEdges">
-        <path fill="#fde047" d="M7 0h2v16H7zM0 7h16v2H0zM3 3h2v2H3zM11 11h2v2h-2zM11 3h2v2h-2zM3 11h2v2H3z"/>
-        <path fill="#ffffff" d="M7 7h2v2H7z"/>
-      </svg>
-
     </div>
 
-    <!-- Ground Floor -->
     <div class="ground"></div>
   </div>
 
@@ -328,90 +297,80 @@
     const dialogue = document.getElementById('dialogue-bubble');
     const bubbleText = document.getElementById('bubble-text');
     const guyArmIdle = document.getElementById('guy-arm-idle');
-    const guyArmReach = document.getElementById('guy-arm-reach');
+    const guyArmHolding = document.getElementById('guy-arm-holding');
     const girlEyesAway = document.getElementById('girl-eyes-away');
     const girlEyesDown = document.getElementById('girl-eyes-down');
-    const handScrape = document.getElementById('hand-scrape');
+    const girlFaceTurned = document.getElementById('girl-face-turned');
+    const girlHandDefault = document.getElementById('girl-hand-default');
     const girlBandaid = document.getElementById('girl-bandaid');
     const bandaidProp = document.getElementById('bandaid-prop');
-    const sparkle = document.getElementById('sparkle');
 
-    // Pixel Emojis (SVG matching the Mario retro aesthetic)
-    const iconPleading = `
-      <svg class="inline-icon" viewBox="0 0 16 16" shape-rendering="crispEdges">
-        <path fill="#f59e0b" d="M2 2h12v12H2z"/>
-        <path fill="#3b82f6" d="M3 5h4v4H3zM9 5h4v4H9z"/>
-        <path fill="#ffffff" d="M4 5h2v2H4zM10 5h2v2h-2z"/>
-        <path fill="#000" d="M5 11h6v1H5zM4 12h1v1H4zM11 12h1v1h-1z"/>
-      </svg>`;
+    // Retro Pixel-Art SVG Emojis
+    const iconHoldingHands = `<svg class="inline-icon" viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="#ffcc80" d="M2 7h5v4H2zM9 7h5v4H9z"/><path fill="#e0a96d" d="M5 8h6v2H5z"/></svg>`;
 
-    const iconHeart = `
-      <svg class="inline-icon" viewBox="0 0 16 16" shape-rendering="crispEdges">
-        <path fill="#dc2626" d="M2 3h4v3H2zM10 3h4v3h-4zM1 6h14v4H1zM3 10h10v2H3zM5 12h6v2H5zM7 14h2v2H7z"/>
-      </svg>`;
+    const iconBandaid = `<svg class="inline-icon" viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="#d4a373" d="M2 5h12v6H2z"/><path fill="#e76f51" d="M6 5h4v6H6z"/><path fill="#fff" d="M7 7h2v2H7z"/></svg>`;
 
-    const iconBandaid = `
-      <svg class="inline-icon" viewBox="0 0 16 16" shape-rendering="crispEdges">
-        <path fill="#d4a373" d="M2 5h12v6H2z"/>
-        <path fill="#e76f51" d="M6 5h4v6H6z"/>
-        <path fill="#fff" d="M7 7h2v2H7z"/>
-      </svg>`;
+    const iconIceCream = `<svg class="inline-icon" viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="#f43f5e" d="M5 1h6v2H5zM4 3h8v3H4z"/><path fill="#fb7185" d="M3 6h10v2H3z"/><path fill="#d97706" d="M4 8h8v2H4zM5 10h6v2H5zM6 12h4v2H6zM7 14h2v2H7z"/><path fill="#b45309" d="M6 9h1v1H6zM9 9h1v1H9zM7 11h1v1H7zM8 13h1v1H8z"/></svg>`;
+
+    const iconHeart = `<svg class="inline-icon" viewBox="0 0 16 16" shape-rendering="crispEdges"><path fill="#ec4899" d="M2 3h4v3H2zM10 3h4v3h-4zM1 6h14v4H1zM3 10h10v2H3zM5 12h6v2H5zM7 14h2v2H7z"/></svg>`;
 
     startBtn.addEventListener('click', () => {
       startScreen.style.display = 'none';
 
-      // 1. Guy walks up to her across the screen
+      // 1. Guy walks close to her
       setTimeout(() => {
         guyHolder.classList.add('walked');
 
-        // 2. Guy arrives and gently asks if everything is okay
+        // 2. Guy arrives and asks if she's okay
         setTimeout(() => {
           dialogue.style.display = 'block';
-          bubbleText.innerHTML = `Hey... is everything okay? ${iconPleading}`;
+          bubbleText.innerHTML = `Hey... is everything okay?`;
 
-          // 3. She doesn't reply, she puts her face down sadly
+          // 3. Girl puts her head down quietly
           setTimeout(() => {
             girlEyesAway.style.display = 'none';
             girlEyesDown.style.display = 'block';
             bubbleText.innerHTML = `...`;
 
-            // 4. Guy notices, reaches out and takes her hand
+            // 4. He physically takes her hand + calls it out
             setTimeout(() => {
               guyArmIdle.style.display = 'none';
-              guyArmReach.style.display = 'block';
-              bubbleText.innerHTML = `*takes her hand gently*`;
+              guyArmHolding.style.display = 'block';
+              bubbleText.innerHTML = `*takes her hand gently* ${iconHoldingHands}`;
 
-              // 5. Visibly applies the band-aid onto her scrape
+              // 5. Applies band-aid + calls it out
               setTimeout(() => {
                 bandaidProp.style.display = 'block';
                 bandaidProp.classList.add('applying');
 
                 setTimeout(() => {
-                  // Band-aid snaps into place onto her hand
-                  handScrape.style.display = 'none';
+                  girlHandDefault.style.display = 'none';
                   girlBandaid.style.display = 'block';
                   bandaidProp.style.display = 'none';
 
-                  // Sparkles pop!
-                  sparkle.style.display = 'block';
-                  setTimeout(() => sparkle.style.display = 'none', 600);
+                  bubbleText.innerHTML = `${iconBandaid}*applies a band-aid*`;
 
-                  bubbleText.innerHTML = `${iconBandaid} *carefully applied band-aid*`;
-
-                  // 6. Finally, he tells her he is sorry about the fall
+                  // 6. Girl turns toward him with blushing cheeks
                   setTimeout(() => {
-                    bubbleText.innerHTML = `I'm so sorry about the fall... <br><br> <span style="font-size: 10px; color: #7f1d1d;">I hope you're feeling better ${iconHeart}</span>`;
-                  }, 2000);
+                    girlEyesDown.style.display = 'none';
+                    girlFaceTurned.style.display = 'block';
 
-                }, 900);
+                    // 7. Apology + invitation
+                    setTimeout(() => {
+                      bubbleText.innerHTML = `I'm sorry about the fall... <br><br> <span style="font-size: 10px; color: #b91c1c; line-height: 1.9;">Do you wanna go get some ice cream? ${iconIceCream}${iconHeart}</span>`;
+                    }, 1400);
 
-              }, 1800);
+                  }, 1600);
+
+                }, 800);
+
+              }, 1400);
 
             }, 2000);
 
-          }, 2400);
+          }, 2200);
 
-        }, 3000);
+        }, 2700);
 
       }, 300);
     });
