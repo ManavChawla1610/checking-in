@@ -41,328 +41,369 @@
       cursor: pointer;
     }
 
-    /* World & Ground */
+    /* World & Sky */
     #world {
       position: relative;
       width: 100vw;
       height: 100vh;
       background: linear-gradient(to bottom, #70a2ff 0%, #a2c4ff 70%, #68a0ff 100%);
+      overflow: hidden;
     }
+
+    /* Pixel Clouds */
+    .pixel-cloud {
+      position: absolute;
+      width: 64px;
+      height: 24px;
+      background: #fff;
+      opacity: 0.85;
+      box-shadow: 16px -8px 0 #fff, 32px 0 0 #fff;
+    }
+    .c1 { top: 12%; left: 15%; }
+    .c2 { top: 22%; right: 20%; transform: scale(0.8); }
+
+    /* Mario-Style Ground */
     .ground {
       position: absolute;
       bottom: 0;
       width: 100%;
-      height: 50px;
+      height: 80px;
       background: #c84c0c;
-      border-top: 6px solid #00a800;
+      border-top: 8px solid #00a800;
+      z-index: 10;
     }
 
-    /* Delivery Pigeon */
-    #pigeon {
+    /* Retro Speech Bubble */
+    #dialogue-bubble {
       position: absolute;
-      top: 8%;
-      left: -120px;
-      width: 90px;
-      height: 90px;
-      display: none;
-      z-index: 100;
-      pointer-events: none;
-      filter: drop-shadow(3px 3px 0px rgba(0,0,0,0.25));
-    }
-    @keyframes flyAround {
-      0% { left: -120px; top: 8%; transform: scaleX(1); }
-      30% { left: 65vw; top: 6%; transform: scaleX(1); }
-      35% { left: 65vw; top: 6%; transform: scaleX(-1); }
-      65% { left: 10vw; top: 18%; transform: scaleX(-1); }
-      70% { left: 10vw; top: 18%; transform: scaleX(1); }
-      100% { left: calc(50vw - 45px); top: 6%; transform: scaleX(1); }
-    }
-    .flying {
-      animation: flyAround 3.8s linear forwards;
-    }
-
-    /* Scroll Frame */
-    .scroll-container {
-      position: absolute;
-      top: 50%;
+      bottom: 230px;
       left: 50%;
-      transform: translate(-50%, -50%);
-      width: 90vw;
-      max-width: 380px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      z-index: 200;
-      visibility: hidden;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 4px solid #000;
+      padding: 14px 18px;
+      box-shadow: 4px 4px 0 rgba(0,0,0,0.35);
+      z-index: 50;
+      max-width: 90vw;
+      min-width: 250px;
+      text-align: center;
+      display: none;
     }
-    .scroll-roller {
-      width: 102%;
-      height: 28px;
-      background: #733c11;
-      border: 4px solid #3d1e06;
-      border-radius: 14px;
-      box-shadow: 0 4px 0 rgba(0,0,0,0.3);
-      position: relative;
-      z-index: 3;
+    #dialogue-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -16px;
+      left: 38%;
+      border-width: 8px;
+      border-style: solid;
+      border-color: #000 transparent transparent transparent;
     }
-    .scroll-body {
-      width: 94%;
-      min-height: 0;
-      height: 0;
-      background: #fce8b1;
-      border-left: 5px dashed #d4b572;
-      border-right: 5px dashed #d4b572;
-      overflow: hidden;
-      transition: height 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      padding: 0 16px;
-    }
-    .scroll-container.open .scroll-body {
-      height: 54vh;
-      max-height: 340px;
-      padding: 20px 16px 14px 16px;
+    #dialogue-bubble::before {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 38%;
+      border-width: 6px;
+      border-style: solid;
+      border-color: #fff transparent transparent transparent;
+      z-index: 2;
     }
 
-    .scroll-title {
-      font-size: 10px;
-      color: #5c2c06;
+    .bubble-text {
+      font-size: 11px;
+      color: #111;
       line-height: 1.8;
-      text-align: center;
-      min-height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      margin: 0;
     }
 
     .inline-icon {
-      width: 16px;
-      height: 16px;
+      width: 18px;
+      height: 18px;
       vertical-align: middle;
       display: inline-block;
-      margin: 0 2px;
+      margin: 0 3px;
     }
 
-    /* Scene Container */
-    .scene-container {
-      position: relative;
-      width: 180px;
-      height: 85px;
-      margin-top: 14px;
-    }
-
-    .hero-guy {
+    /* Stage for characters */
+    #stage {
       position: absolute;
-      left: -100px;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 320px;
+      height: 140px;
+      z-index: 20;
+    }
+
+    /* Guy character walking */
+    .guy-holder {
+      position: absolute;
+      left: -120px;
       bottom: 0;
-      width: 75px;
-      height: 85px;
-      transition: left 2.2s cubic-bezier(0.25, 1, 0.5, 1);
+      width: 80px;
+      height: 90px;
+      transition: left 2.8s cubic-bezier(0.25, 1, 0.45, 1);
+    }
+    .guy-holder.walked {
+      left: 65px; /* Arrives closely beside her */
+    }
+
+    .girl-holder {
+      position: absolute;
+      right: 50px;
+      bottom: 0;
+      width: 80px;
+      height: 90px;
+    }
+
+    svg.character {
+      width: 100%;
+      height: 100%;
       display: block;
     }
-    .hero-guy.walked {
-      left: 14px;
-    }
 
-    .hero-girl {
+    /* Floating band-aid that gets applied */
+    #bandaid-prop {
       position: absolute;
-      right: 14px;
-      bottom: 0;
-      width: 75px;
-      height: 85px;
-      display: block;
+      left: 125px;
+      bottom: 38px;
+      width: 22px;
+      height: 14px;
+      z-index: 40;
+      display: none;
+      filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.3));
+    }
+    @keyframes applyBandAid {
+      0% {
+        transform: translate(-18px, -18px) rotate(-25deg) scale(1.4);
+        opacity: 0.2;
+      }
+      60% {
+        transform: translate(-2px, -4px) rotate(8deg) scale(1.1);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(0px, 0px) rotate(0deg) scale(1);
+        opacity: 1;
+      }
+    }
+    .applying {
+      animation: applyBandAid 0.9s ease-out forwards;
     }
 
-    /* Sparkle effect on band-aid apply */
+    /* Little pixel sparkles on application */
     .sparkle {
       position: absolute;
-      left: 86px;
-      top: 48px;
-      width: 14px;
-      height: 14px;
-      opacity: 0;
-      transform: scale(0.5);
-      transition: all 0.4s ease-out;
+      left: 138px;
+      bottom: 45px;
+      width: 18px;
+      height: 18px;
+      z-index: 45;
+      display: none;
       pointer-events: none;
-    }
-    .sparkle.show {
-      opacity: 1;
-      transform: scale(1.2);
-    }
-
-    .sub-note {
-      font-size: 9px;
-      color: #7f1d1d;
-      text-align: center;
-      margin-top: 16px;
-      line-height: 1.6;
-      min-height: 24px;
     }
   </style>
 </head>
 <body>
 
-  <!-- Start Overlay -->
+  <!-- Press Start Overlay -->
   <div id="start-screen">
     <button class="retro-btn" id="start-btn">▶ PRESS START</button>
   </div>
 
   <div id="world">
-    <!-- Pigeon Delivery -->
-    <svg id="pigeon" viewBox="0 0 16 16" shape-rendering="crispEdges">
-      <path fill="#737373" d="M3 6h5v2H3zM1 8h9v2H1zM3 10h7v2H3z" />
-      <path fill="#a3a3a3" d="M8 3h4v3H8z" />
-      <path fill="#f59e0b" d="M12 4h3v2h-3z" />
-      <path fill="#000" d="M10 4h1v1h-1z" />
-      <path fill="#ffffff" d="M10 7h5v4h-5z" />
-      <path fill="#ef4444" d="M12 8h2v2h-2z" />
-    </svg>
+    <div class="pixel-cloud c1"></div>
+    <div class="pixel-cloud c2"></div>
 
-    <!-- Scroll -->
-    <div class="scroll-container" id="scroll">
-      <div class="scroll-roller"></div>
-      <div class="scroll-body">
-        
-        <div class="scroll-title" id="dialogue-text">
-          ...
-        </div>
-
-        <div class="scene-container">
-          <!-- Guy Character (Brown hair, green shirt, green shoes) -->
-          <svg class="hero-guy" id="guy" viewBox="0 0 22 25" shape-rendering="crispEdges">
-            <!-- Hat/Hair -->
-            <path fill="#6d4c41" d="M5 2h10v4H5zM4 4h12v2H4z"/>
-            <!-- Face -->
-            <path fill="#ffcc80" d="M5 6h10v6H5z"/>
-            <!-- Soft Caring Eyes -->
-            <path fill="#3e2723" d="M6 8h2v2H6zM12 8h2v2h-2z"/>
-            <!-- Gentle Smile -->
-            <path fill="#d84315" d="M7 11h1v1H7zM8 12h4v1H8zM12 11h1v1h-1z"/>
-            <!-- Shirt -->
-            <path fill="#43a047" d="M4 12h12v7H4z"/>
-            <path fill="#2e7d32" d="M4 12h2v7H4zM14 12h2v7h-2z"/>
-            <path fill="#fff" d="M2 13h2v5H2z"/>
-            <path fill="#fbc02d" d="M9 16h2v2H9z"/>
-            <path fill="#212121" d="M4 16h12v1H4z"/>
-            <!-- Right Arm extending gently toward her -->
-            <path fill="#fff" d="M16 13h3v3h-3z"/>
-            <path fill="#ffcc80" d="M18 15h3v3h-3z"/>
-            <!-- Green Shoes -->
-            <path fill="#2e7d32" d="M5 23h4v2H5zM11 23h4v2h-4z"/>
-          </svg>
-
-          <!-- Girl Character (Turned away, looking down, injured hand -> bandaged) -->
-          <svg class="hero-girl" id="girl" viewBox="0 0 22 25" shape-rendering="crispEdges">
-            <!-- Blonde Hair -->
-            <path fill="#ffee58" d="M3 2h16v12H3z"/>
-            <path fill="#fbc02d" d="M2 4h18v10H2z"/>
-            <!-- Face -->
-            <path fill="#ffcc80" d="M5 6h12v6H5z"/>
-            
-            <!-- Eyes looking away (Default Stage 1) -->
-            <g id="girl-eyes-away">
-              <path fill="#3e2723" d="M9 8h2v2H9zM14 8h2v2h-2z"/>
-              <path fill="#d84315" d="M8 11h5v1H8z"/>
-            </g>
-
-            <!-- Eyes looking down sadly (Stage 2 & 3) -->
-            <g id="girl-eyes-down" style="display: none;">
-              <!-- Downward angled soft lashes -->
-              <path fill="#3e2723" d="M9 9h3v1H9zM14 9h3v1h-3zM8 10h1v1H8zM13 10h1v1h-1z"/>
-              <!-- Small soft frown -->
-              <path fill="#b91c1c" d="M9 12h4v1H9z"/>
-            </g>
-
-            <!-- Dress -->
-            <path fill="#1e88e5" d="M3 12h16v9H3z"/>
-            <path fill="#1565c0" d="M2 13h4v4H2zM16 13h4v4h-4z"/>
-            <path fill="#bbdefb" d="M7 12h8v2H7zM3 20h16v1H3z"/>
-            <path fill="#ffcc80" d="M9 15h4v3H9z"/>
-            
-            <!-- Left Hand facing toward guy -->
-            <path fill="#ffcc80" d="M1 15h3v3H1z"/>
-            <!-- Scrape mark (red) -->
-            <path id="hand-scratch" fill="#dc2626" d="M2 16h2v1H2z"/>
-            <!-- Band-aid (beige with red cross, starts hidden) -->
-            <g id="hand-bandaid" style="display: none;">
-              <path fill="#f5d0a9" d="M1 15h3v3H1z"/>
-              <path fill="#dc2626" d="M2 16h1v1H2z"/>
-            </g>
-
-            <!-- Legs & Shoes -->
-            <path fill="#ffcc80" d="M6 21h3v2H6zM13 21h3v2h-3z"/>
-            <path fill="#4e342e" d="M5 23h5v2H5zM12 23h5v2h-5z"/>
-          </svg>
-
-          <!-- Little pixel sparkle -->
-          <svg class="sparkle" id="sparkle" viewBox="0 0 16 16" shape-rendering="crispEdges">
-            <path fill="#fde047" d="M7 1h2v14H7zM1 7h14v2H1zM4 4h2v2H4zM10 10h2v2h-2zM10 4h2v2h-2zM4 10h2v2H4z"/>
-            <path fill="#ffffff" d="M7 7h2v2H7z"/>
-          </svg>
-        </div>
-
-        <div class="sub-note" id="status-line"></div>
-
-      </div>
-      <div class="scroll-roller"></div>
+    <!-- Speech Dialogue Box -->
+    <div id="dialogue-bubble">
+      <p class="bubble-text" id="bubble-text">...</p>
     </div>
 
+    <!-- Main Character Stage -->
+    <div id="stage">
+      
+      <!-- Guy (Brown hair, green outfit, green shoes) -->
+      <div class="guy-holder" id="guy-holder">
+        <svg class="character" viewBox="0 0 24 25" shape-rendering="crispEdges">
+          <!-- Hair/Hat -->
+          <path fill="#6d4c41" d="M5 2h10v4H5zM4 4h12v2H4z"/>
+          <!-- Face -->
+          <path fill="#ffcc80" d="M5 6h10v6H5z"/>
+          <!-- Soft Caring Eyes -->
+          <path fill="#3e2723" d="M6 8h2v2H6zM12 8h2v2h-2z"/>
+          <!-- Gentle Smile -->
+          <path fill="#d84315" d="M7 11h1v1H7zM8 12h4v1H8zM12 11h1v1h-1z"/>
+          <!-- Shirt -->
+          <path fill="#43a047" d="M4 12h12v7H4z"/>
+          <path fill="#2e7d32" d="M4 12h2v7H4zM14 12h2v7h-2z"/>
+          <path fill="#fff" d="M2 13h2v5H2z"/>
+          <path fill="#fbc02d" d="M9 16h2v2H9z"/>
+          <path fill="#212121" d="M4 16h12v1H4z"/>
+
+          <!-- Default lowered right arm -->
+          <g id="guy-arm-idle">
+            <path fill="#fff" d="M16 13h2v4h-2z"/>
+            <path fill="#ffcc80" d="M16 17h2v2h-2z"/>
+          </g>
+          <!-- Extended reaching arm taking her hand -->
+          <g id="guy-arm-reach" style="display: none;">
+            <path fill="#fff" d="M15 13h4v3h-4z"/>
+            <path fill="#ffcc80" d="M19 14h5v3h-5z"/>
+          </g>
+
+          <!-- Green Shoes -->
+          <path fill="#2e7d32" d="M5 23h4v2H5zM11 23h4v2h-4z"/>
+        </svg>
+      </div>
+
+      <!-- Girl (Blonde hair, blue dress, turned away looking right, hurt hand) -->
+      <div class="girl-holder" id="girl-holder">
+        <svg class="character" viewBox="0 0 22 25" shape-rendering="crispEdges">
+          <!-- Blonde Hair -->
+          <path fill="#ffee58" d="M3 2h16v12H3z"/>
+          <path fill="#fbc02d" d="M2 4h18v10H2z"/>
+          <!-- Face -->
+          <path fill="#ffcc80" d="M5 6h12v6H5z"/>
+
+          <!-- Eyes looking away (Default Stage 1) -->
+          <g id="girl-eyes-away">
+            <path fill="#3e2723" d="M9 8h2v2H9zM14 8h2v2h-2z"/>
+            <path fill="#d84315" d="M8 11h5v1H8z"/>
+          </g>
+
+          <!-- Eyes looking down (Stage 2 after he asks) -->
+          <g id="girl-eyes-down" style="display: none;">
+            <path fill="#3e2723" d="M9 9h3v1H9zM14 9h3v1h-3zM8 10h1v1H8zM13 10h1v1h-1z"/>
+            <path fill="#b91c1c" d="M9 12h4v1H9z"/>
+          </g>
+
+          <!-- Blue Dress -->
+          <path fill="#1e88e5" d="M3 12h16v9H3z"/>
+          <path fill="#1565c0" d="M2 13h4v4H2zM16 13h4v4h-4z"/>
+          <path fill="#bbdefb" d="M7 12h8v2H7zM3 20h16v1H3z"/>
+          <path fill="#ffcc80" d="M9 15h4v3H9z"/>
+
+          <!-- Left Hurt Hand held out towards guy -->
+          <path fill="#ffcc80" d="M0 14h3v3H0z"/>
+          <!-- Red Scratch / Scrape on hand -->
+          <path id="hand-scrape" fill="#dc2626" d="M1 15h2v1H1z"/>
+          <!-- Visible Band-Aid stuck on her hand after application -->
+          <g id="girl-bandaid" style="display: none;">
+            <path fill="#d4a373" d="M0 14h4v3H0z"/>
+            <path fill="#e76f51" d="M1 14h2v3H1z"/>
+            <path fill="#b91c1c" d="M1 15h2v1H1z"/>
+          </g>
+
+          <!-- Legs & Shoes -->
+          <path fill="#ffcc80" d="M6 21h3v2H6zM13 21h3v2h-3z"/>
+          <path fill="#4e342e" d="M5 23h5v2H5zM12 23h5v2h-5z"/>
+        </svg>
+      </div>
+
+      <!-- Animated Pixel Band-aid Prop -->
+      <svg id="bandaid-prop" viewBox="0 0 16 10" shape-rendering="crispEdges">
+        <path fill="#d4a373" d="M2 1h12v8H2zM1 2h14v6H1z"/>
+        <path fill="#e76f51" d="M6 1h4v8H6z"/>
+        <path fill="#b91c1c" d="M7 3h2v4H7zM6 4h4v2H6z"/>
+        <path fill="#fff" d="M7 4h2v2H7z"/>
+      </svg>
+
+      <!-- Sparkle SVG on Band-aid Application -->
+      <svg class="sparkle" id="sparkle" viewBox="0 0 16 16" shape-rendering="crispEdges">
+        <path fill="#fde047" d="M7 0h2v16H7zM0 7h16v2H0zM3 3h2v2H3zM11 11h2v2h-2zM11 3h2v2h-2zM3 11h2v2H3z"/>
+        <path fill="#ffffff" d="M7 7h2v2H7z"/>
+      </svg>
+
+    </div>
+
+    <!-- Ground Floor -->
     <div class="ground"></div>
   </div>
 
   <script>
     const startBtn = document.getElementById('start-btn');
     const startScreen = document.getElementById('start-screen');
-    const pigeon = document.getElementById('pigeon');
-    const scroll = document.getElementById('scroll');
-    const guy = document.getElementById('guy');
-    const dialogue = document.getElementById('dialogue-text');
-    const statusLine = document.getElementById('status-line');
+    const guyHolder = document.getElementById('guy-holder');
+    const dialogue = document.getElementById('dialogue-bubble');
+    const bubbleText = document.getElementById('bubble-text');
+    const guyArmIdle = document.getElementById('guy-arm-idle');
+    const guyArmReach = document.getElementById('guy-arm-reach');
     const girlEyesAway = document.getElementById('girl-eyes-away');
     const girlEyesDown = document.getElementById('girl-eyes-down');
-    const handScratch = document.getElementById('hand-scratch');
-    const handBandaid = document.getElementById('hand-bandaid');
+    const handScrape = document.getElementById('hand-scrape');
+    const girlBandaid = document.getElementById('girl-bandaid');
+    const bandaidProp = document.getElementById('bandaid-prop');
     const sparkle = document.getElementById('sparkle');
+
+    // Pixel Emojis (SVG matching the Mario retro aesthetic)
+    const iconPleading = `
+      <svg class="inline-icon" viewBox="0 0 16 16" shape-rendering="crispEdges">
+        <path fill="#f59e0b" d="M2 2h12v12H2z"/>
+        <path fill="#3b82f6" d="M3 5h4v4H3zM9 5h4v4H9z"/>
+        <path fill="#ffffff" d="M4 5h2v2H4zM10 5h2v2h-2z"/>
+        <path fill="#000" d="M5 11h6v1H5zM4 12h1v1H4zM11 12h1v1h-1z"/>
+      </svg>`;
+
+    const iconHeart = `
+      <svg class="inline-icon" viewBox="0 0 16 16" shape-rendering="crispEdges">
+        <path fill="#dc2626" d="M2 3h4v3H2zM10 3h4v3h-4zM1 6h14v4H1zM3 10h10v2H3zM5 12h6v2H5zM7 14h2v2H7z"/>
+      </svg>`;
+
+    const iconBandaid = `
+      <svg class="inline-icon" viewBox="0 0 16 16" shape-rendering="crispEdges">
+        <path fill="#d4a373" d="M2 5h12v6H2z"/>
+        <path fill="#e76f51" d="M6 5h4v6H6z"/>
+        <path fill="#fff" d="M7 7h2v2H7z"/>
+      </svg>`;
 
     startBtn.addEventListener('click', () => {
       startScreen.style.display = 'none';
-      pigeon.style.display = 'block';
-      pigeon.classList.add('flying');
 
-      // Scroll opens
+      // 1. Guy walks up to her across the screen
       setTimeout(() => {
-        scroll.style.visibility = 'visible';
-        scroll.classList.add('open');
+        guyHolder.classList.add('walked');
 
-        // Guy walks up to her
+        // 2. Guy arrives and gently asks if everything is okay
         setTimeout(() => {
-          guy.classList.add('walked');
+          dialogue.style.display = 'block';
+          bubbleText.innerHTML = `Hey... is everything okay? ${iconPleading}`;
 
-          // Guy arrives & asks
+          // 3. She doesn't reply, she puts her face down sadly
           setTimeout(() => {
-            dialogue.innerHTML = 'Hey... is everything okay? 🥺';
+            girlEyesAway.style.display = 'none';
+            girlEyesDown.style.display = 'block';
+            bubbleText.innerHTML = `...`;
 
-            // She doesn't reply, just looks down
+            // 4. Guy notices, reaches out and takes her hand
             setTimeout(() => {
-              girlEyesAway.style.display = 'none';
-              girlEyesDown.style.display = 'block';
-              dialogue.innerHTML = '... 🌧️';
+              guyArmIdle.style.display = 'none';
+              guyArmReach.style.display = 'block';
+              bubbleText.innerHTML = `*takes her hand gently*`;
 
-              // Guy reaches out and applies band-aid
+              // 5. Visibly applies the band-aid onto her scrape
               setTimeout(() => {
-                handScratch.style.display = 'none';
-                handBandaid.style.display = 'block';
-                sparkle.classList.add('show');
-                statusLine.innerHTML = '🩹 *applied band-aid* ✨';
+                bandaidProp.style.display = 'block';
+                bandaidProp.classList.add('applying');
 
-                setTimeout(() => sparkle.classList.remove('show'), 600);
-
-                // Final caring message
                 setTimeout(() => {
-                  dialogue.innerHTML = "I'm so sorry about the fall... <br><br> <span style='font-size: 8px; color: #5c2c06;'>I hope you're feeling better ❤️</span>";
-                }, 1600);
+                  // Band-aid snaps into place onto her hand
+                  handScrape.style.display = 'none';
+                  girlBandaid.style.display = 'block';
+                  bandaidProp.style.display = 'none';
+
+                  // Sparkles pop!
+                  sparkle.style.display = 'block';
+                  setTimeout(() => sparkle.style.display = 'none', 600);
+
+                  bubbleText.innerHTML = `${iconBandaid} *carefully applied band-aid*`;
+
+                  // 6. Finally, he tells her he is sorry about the fall
+                  setTimeout(() => {
+                    bubbleText.innerHTML = `I'm so sorry about the fall... <br><br> <span style="font-size: 10px; color: #7f1d1d;">I hope you're feeling better ${iconHeart}</span>`;
+                  }, 2000);
+
+                }, 900);
 
               }, 1800);
 
@@ -370,9 +411,9 @@
 
           }, 2400);
 
-        }, 400);
+        }, 3000);
 
-      }, 3800);
+      }, 300);
     });
   </script>
 </body>
